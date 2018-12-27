@@ -1,0 +1,6 @@
+#define wxUSE_NO_MANIFEST 1
+//#include "wx/msw/wx.rc"
+
+//#include "wxAddons\wxAddons.rc"
+
+appicon ICON ".\\icons\\RTTTL.ico"
