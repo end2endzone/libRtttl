@@ -83,11 +83,11 @@ Section #"Full install" SEC01
   File "LICENSE.htm"
   File "LICENSE.pdf"
   File "..\bin\${PRODUCT_PLATFORM}\Release\rtttlOptimizerGui.exe"
-  File "..\bin\${PRODUCT_PLATFORM}\Release\libBitReader.dll"
+  File "..\bin\${PRODUCT_PLATFORM}\Release\libMidi.dll"
   File "..\bin\${PRODUCT_PLATFORM}\Release\beep.dll"
-  File "..\bin\${PRODUCT_PLATFORM}\Release\libRTTTL.dll"
+  File "..\bin\${PRODUCT_PLATFORM}\Release\libRtttl.dll"
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\rtttlOptimizerGui.lnk"        "$INSTDIR\extToolsAbout.exe"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\rtttlOptimizerGui.lnk"        "$INSTDIR\rtttlOptimizerGui.exe"
 SectionEnd
 
 Section -AdditionalIcons
@@ -134,9 +134,9 @@ Section Uninstall
   Delete "$INSTDIR\LICENSE.htm"
   Delete "$INSTDIR\LICENSE.pdf"
   Delete "$INSTDIR\rtttlOptimizerGui.exe"
-  Delete "$INSTDIR\libBitReader.dll"
+  Delete "$INSTDIR\libMidi.dll"
   Delete "$INSTDIR\beep.dll"
-  Delete "$INSTDIR\libRTTTL.dll"
+  Delete "$INSTDIR\libRtttl.dll"
 
   Delete "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk"
   Delete "$SMPROGRAMS\${PRODUCT_NAME}\rtttlOptimizerGui.lnk"

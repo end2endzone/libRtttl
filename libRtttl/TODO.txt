@@ -1,0 +1,2 @@
+- Implement relaxed RTTTL format settings:
+  - allow octave from 1 to 8 instead instead of 4 to 7.

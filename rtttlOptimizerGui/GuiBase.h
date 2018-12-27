@@ -44,10 +44,11 @@ class MainFrameBase : public wxFrame
 		wxPanel* m_panel22;
 		wxTextCtrl* m_txtInput;
 		wxPanel* m_panel8;
-		wxButton* m_btnPlay;
 		wxButton* m_btnOptimize;
-		wxButton* m_btnDecode;
+		wxButton* m_btnPlay;
+		wxButton* m_btnMidi;
 		wxButton* m_btnFromTone;
+		wxButton* m_btnDecode;
 		wxButton* m_btnToBinary10Bits;
 		wxButton* m_btnToBinary16Bits;
 		wxPanel* m_panel221;
@@ -56,10 +57,11 @@ class MainFrameBase : public wxFrame
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void onClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void onPlay( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onOptimize( wxCommandEvent& event ) { event.Skip(); }
-		virtual void onToTone( wxCommandEvent& event ) { event.Skip(); }
+		virtual void onPlay( wxCommandEvent& event ) { event.Skip(); }
+		virtual void onMidi( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onFromTone( wxCommandEvent& event ) { event.Skip(); }
+		virtual void onToTone( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onBinary10( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onBinary16( wxCommandEvent& event ) { event.Skip(); }
 		

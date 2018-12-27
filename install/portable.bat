@@ -15,9 +15,9 @@ set outfile=".\bin\rtttlOptimizer v%PRODUCT_VERSION%.%SVN_REVISION% %PRODUCT_PLA
 
 set infiles=
 set infiles=%infiles% "..\bin\%PRODUCT_PLATFORM%\Release\rtttlOptimizerGui.exe"
-set infiles=%infiles% "..\bin\%PRODUCT_PLATFORM%\Release\libBitReader.dll"
+set infiles=%infiles% "..\bin\%PRODUCT_PLATFORM%\Release\libMidi.dll"
 set infiles=%infiles% "..\bin\%PRODUCT_PLATFORM%\Release\beep.dll"
-set infiles=%infiles% "..\bin\%PRODUCT_PLATFORM%\Release\libRTTTL.dll"
+set infiles=%infiles% "..\bin\%PRODUCT_PLATFORM%\Release\libRtttl.dll"
 set infiles=%infiles% "LICENSE.htm"
 set infiles=%infiles% "LICENSE.pdf"
 

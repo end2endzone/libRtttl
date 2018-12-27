@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BEEP_API_H
+#define BEEP_API_H
 
 // The following ifdef block is the standard way of creating macros which make exporting 
 // from a DLL simpler. All files within this DLL are compiled with the BEEP_EXPORTS
@@ -11,3 +12,5 @@
 #else
 #define BEEP_API __declspec(dllimport)
 #endif
+
+#endif //BEEP_API_H

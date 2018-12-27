@@ -106,7 +106,7 @@
 	<References>
 		<ProjectReference
 			ReferencedProjectIdentifier="{A2E6BB0A-5119-4D9F-A9B4-2C2E4DA40BF0}"
-			RelativePathToProject=".\optimizergui\optimizergui.vcproj"
+			RelativePathToProject=".\rtttlOptimizerGui\rtttlOptimizerGui.vcproj"
 		/>
 	</References>
 	<Files>
@@ -170,6 +170,46 @@
 			<File
 				RelativePath=".\main.nsi"
 				>
+			</File>
+			<File
+				RelativePath=".\pkgsrc.bat"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Running $(InputFileName)..."
+						CommandLine="set PRODUCT_PLATFORM=$(PlatformName)&#x0D;&#x0A;call $(InputFileName)&#x0D;&#x0A;"
+						Outputs="$(OutDir)\$(InputFileName)"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Running $(InputFileName)..."
+						CommandLine="set PRODUCT_PLATFORM=$(PlatformName)&#x0D;&#x0A;call $(InputFileName)&#x0D;&#x0A;"
+						Outputs="$(OutDir)\$(InputFileName)"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\portable.bat"

@@ -1,10 +1,53 @@
+//
+//  libRTTTL Library - v1.2 - 05/27/2016
+//  Copyright (C) 2016 Antoine Beauchamp
+//  The code & updates for the library can be found on http://end2endzone.com
+//
+// AUTHOR/LICENSE:
+//  This library is free software; you can redistribute it and/or
+//  modify it under the terms of the GNU Lesser General Public
+//  License as published by the Free Software Foundation; either
+//  version 3.0 of the License, or (at your option) any later version.
+//
+//  This library is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+//  Lesser General Public License (LGPL-3.0) for more details.
+//
+//  You should have received a copy of the GNU Lesser General Public
+//  License along with this library; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+//
+// DISCLAIMER:
+//  This software is furnished "as is", without technical support, and with no 
+//  warranty, express or implied, as to its usefulness for any purpose.
+//
+// PURPOSE:
+//  The library allows one to convert an RTTTL melody to other formats like:
+//  - Smaller RTTTL code
+//  - Arduino code (tone() and delay() function calls)
+//  - Binary RTTTL. See AnyRtttl library at http://end2endzone.com
+//
+//  The library also support converting arduino code (tones) to RTTTL.
+//  
+// HISTORY:
+// 05/27/2016 v1.2 - First public release.
+//
+
 #include "Controller.h"
 #include "Model.h"
 #include "tone.h"
 #include "beep.h"
-#include "arduinoBinRtttl.h"
-#include "arduinoPlay10BitsRtttl.h"
-#include "arduinoPlay16BitsRtttl.h"
+#include "libMidi.h"
+#include "anyrtttl.h"
+
+//Undefine the following from arduino.h
+//which generates the following issues:
+//  1>c:\program files\microsoft sdks\windows\v7.0\include\winuser.h(5341) : warning C4091: 'typedef ' : ignored on left of 'tagINPUT' when no variable is declared
+//  1>c:\program files\microsoft sdks\windows\v7.0\include\winuser.h(5341) : error C2143: syntax error : missing ';' before 'constant'
+//  1>c:\program files\microsoft sdks\windows\v7.0\include\winuser.h(5341) : error C2059: syntax error : 'constant'
+//  1>c:\program files\microsoft sdks\windows\v7.0\include\winuser.h(5348) : error C2061: syntax error : identifier 'LPINPUT'
+#undef INPUT
 
 #ifndef WX_PRECOMP
   #include <wx/wx.h>
@@ -66,6 +109,127 @@ void Controller::play()
 
     char info[1024];
     sprintf(info, "Played %d notes.", calls.size());
+    r.info = info;
+  }
+  else
+  {
+    r.result = NOT_SUPPORTED;
+  }
+
+  //set result back to model
+  m.setRequest(r);
+}
+
+void Controller::toMidi()
+{
+  //Update libRTTTL settings
+  applyRtttlOptions();
+
+  Model & m = Model::getInstance();
+
+  //Update model for request
+  Model::MODEL_REQUEST r = m.getRequest();
+
+  //Convert string to RTTTL_SONG
+  RTTTL_SONG rtttl;
+  reset(rtttl);
+  const char * code = r.rtttlInput.c_str();
+  RTTTL_RESULT result = parseRtttlString(code, rtttl);
+  if (result != SUCCESS)
+  {
+    r.result = result;
+    r.errorDescription = getErrorDescription(r.result);
+
+    //set result back to model
+    m.setRequest(r);
+    return;
+  }
+
+  //play the song to extract tone() & delay() calls
+  TONE_CALL_INFO_LIST calls = playRTTTL(code);
+
+  //Remove all delay() calls which matches a tone() call.
+  removeExpectedDelays(calls);
+
+  //got something to play
+  if (calls.size() == 0)
+  {
+    r.result = UNKNOWN;
+    r.errorDescription = "Nothing to play";
+
+    //set result back to model
+    m.setRequest(r);
+    return;
+  }
+
+  //Configure a MIDI file output
+  MidiFile midi;
+  midi.setInstrument(0x50); //Lead 1 (square)
+  midi.setMidiType(MidiFile::MIDI_TYPE_0);
+  midi.setBeatsPerMinute(rtttl.defaults.bpm);
+  midi.setName(rtttl.name);
+  midi.setVolume(0x64);
+
+  //forward each calls to the MidiFile module
+  int numNotes = 0;
+  for(size_t i=0; i<calls.size(); i++)
+  {
+    const TONE_CALL_INFO & c = calls[i];
+    if (c._tone != INVALID_TONE_INFO)
+    {
+      midi.addNote(c._tone.freq, c._tone.duration);
+    }
+    if (c.delay != INVALID_TONE_DURATION)
+    {
+      midi.addDelay(c.delay);
+    }
+  }
+
+  //adding an additional 250ms delay so that MIDI files does not abruptly end
+  midi.addDelay(250); //adding a 250ms
+
+  //build a temporary file path
+  std::string outputFile;
+  outputFile = getenv("TEMP");
+#ifdef _WIN32
+  outputFile.append("\\");
+#else
+  outputFile.append("/");
+#endif
+  outputFile.append("rtttlOptimizerGui.mid");
+
+  //save
+  bool saved = midi.save(outputFile.c_str());
+  if (!saved)
+  {
+    r.result = NOT_SUPPORTED;
+    r.errorDescription = std::string("Failed saving RTTTL to MIDI file ") + outputFile;
+
+    //set result back to model
+    m.setRequest(r);
+    return;
+  }
+
+  //now play the file
+  bool playSuccess = (playMidiFile(outputFile.c_str()) == 0);
+  if (!playSuccess)
+  {
+    r.result = UNKNOWN;
+    r.errorDescription = std::string("Failed play MIDI file ") + outputFile;
+
+    //set result back to model
+    m.setRequest(r);
+    return;
+  }
+
+  //success ?
+  if ( calls.size() > 0 )
+  {
+    r.result = SUCCESS;
+    r.rtttlOutput = std::string("Playing MIDI file ") + outputFile;
+
+    char info[1024];
+    sprintf(info, "Playing %d notes.", calls.size());
     r.info = info;
   }
   else
@@ -169,6 +333,7 @@ void Controller::toTone()
     rtttl.name[0] = toupper( rtttl.name[0] );
     sprintf(functionDeclaration, "void play%s(int pin) {\n", rtttl.name);
     r.rtttlOutput.insert(0, functionDeclaration);
+    r.rtttlOutput.append("  noTone(pin);\n");
     r.rtttlOutput.append("}\n");
 
     char info[1024];
@@ -266,14 +431,6 @@ void Controller::toBinary10()
     return;
   }
 
-  //Force song to use anyBpm instead of bpmIdx
-  //since arduino only supports anyBpm
-  if (!rtttl.defaults.hasAnyBpm)
-  {
-    rtttl.defaults.anyBpm = getOfficialBpmFromIndex(rtttl.defaults.bpmIdx);
-    rtttl.defaults.hasAnyBpm = true;
-  }
-
   //Convert song to stream
   STREAM stream;
   toStream10(rtttl, stream);
@@ -281,8 +438,8 @@ void Controller::toBinary10()
   //convert stream to c++ code
   std::string cppCode = toCppArray(stream);
 
-  //capitalize the name of the song
-  rtttl.name[0] = toupper( rtttl.name[0] );
+  //lowercase the name of the song
+  rtttl.name[0] = tolower( rtttl.name[0] );
 
   //success ?
   if ( stream.length > 0 )
@@ -291,19 +448,57 @@ void Controller::toBinary10()
 
     //append arduino code for decoding RTTTL data
     r.rtttlOutput = "";
-    r.rtttlOutput.append("// Note:\n//   10 Bits RTTTL format requires the BitReader library.\n//   The code & updates for the BitReader library can be found on http://end2endzone.com\n#include <bitreader.h>\n\n");
-    r.rtttlOutput.append("//#define RTTTL_SERIAL_DEBUG\n\n");
-    appendArduinoBinRtttlFile(r.rtttlOutput);
+    r.rtttlOutput.append("//Notes:\n");
+    r.rtttlOutput.append("// 10 Bits RTTTL format requires AnyRtttl & BitReader libraries.\n");
+    r.rtttlOutput.append("// The code & updates for AnyRtttl & BitReader libraries can be found on http://end2endzone.com\n");
+    r.rtttlOutput.append("#include <anyrtttl.h>\n");
+    r.rtttlOutput.append("#include <binrtttl.h>\n");
+    r.rtttlOutput.append("#include <pitches.h>\n");
     r.rtttlOutput.append("\n");
-    appendArduinoPlay10BitsRtttlFile(r.rtttlOutput);
+    r.rtttlOutput.append("#include <bitreader.h>\n");
+    r.rtttlOutput.append("\n");
+    r.rtttlOutput.append("//#define ANY_RTTTL_INFO\n");
+    r.rtttlOutput.append("//#define ANY_RTTTL_DEBUG\n");
     r.rtttlOutput.append("\n");
 
     //build a cpp friendly code for extracting data
     char buffer[10240];
-    sprintf(buffer, "//rtttl 10 bits binary format for the following: %s\n" \
+    sprintf(buffer, "//RTTTL 10 bits binary format for the following: %s\n" \
+                    "//Compatible with AnyRtttl library v%2.1f\n" \
                     "const unsigned char %s[] = %s;\n" \
-                    "const int %s_note_length = %d;\n",
-                    code, rtttl.name, cppCode.c_str(), rtttl.name, rtttl.notes.size());
+                    "const int %s_length = %d;\n",
+                    code, ANY_RTTTL_VERSION, rtttl.name, cppCode.c_str(), rtttl.name, rtttl.notes.size());
+    r.rtttlOutput.append(buffer);
+    r.rtttlOutput.append("\n");
+
+    //add the BitReader required code.
+    r.rtttlOutput.append("//BitReader support\n");
+    r.rtttlOutput.append("#ifndef USE_BITADDRESS_READ_WRITE\n");
+    r.rtttlOutput.append("BitReader bitreader;\n");
+    r.rtttlOutput.append("#else\n");
+    r.rtttlOutput.append("BitAddress bitreader;\n");
+    r.rtttlOutput.append("#endif\n");
+    r.rtttlOutput.append("\n");
+
+    sprintf(buffer, "//the following function reads numBits from the %s buffer\n", rtttl.name);
+    r.rtttlOutput.append(buffer);
+
+    r.rtttlOutput.append("uint16_t readNextBits(uint8_t numBits)\n");
+    r.rtttlOutput.append("{\n");
+    r.rtttlOutput.append("  uint16_t bits = 0;\n");
+    r.rtttlOutput.append("  bitreader.read(numBits, &bits);\n");
+    r.rtttlOutput.append("  return bits;\n");
+    r.rtttlOutput.append("}\n");
+    r.rtttlOutput.append("\n");
+
+    r.rtttlOutput.append("//Add the following in setup()\n");
+    sprintf(buffer, "//bitreader.setBuffer(%s);\n", rtttl.name);
+    r.rtttlOutput.append(buffer);
+    r.rtttlOutput.append("\n");
+
+    sprintf(buffer, "//Call the following for playing %s melody\n", rtttl.name);
+    r.rtttlOutput.append(buffer);
+    sprintf(buffer, "//anyrtttl::blocking::play10Bits(BUZZER_PIN, %s_length, &readNextBits);\n", rtttl.name);
     r.rtttlOutput.append(buffer);
 
     //build information message
@@ -348,14 +543,6 @@ void Controller::toBinary16()
     return;
   }
 
-  //Force song to use anyBpm instead of bpmIdx
-  //since arduino only supports anyBpm
-  if (!rtttl.defaults.hasAnyBpm)
-  {
-    rtttl.defaults.anyBpm = getOfficialBpmFromIndex(rtttl.defaults.bpmIdx);
-    rtttl.defaults.hasAnyBpm = true;
-  }
-
   //Convert song to stream
   STREAM stream;
   toStream16(rtttl, stream);
@@ -363,8 +550,8 @@ void Controller::toBinary16()
   //convert stream to c++ code
   std::string cppCode = toCppArray(stream);
 
-  //capitalize the name of the song
-  rtttl.name[0] = toupper( rtttl.name[0] );
+  //lowercase the name of the song
+  rtttl.name[0] = tolower( rtttl.name[0] );
 
   //success ?
   if ( stream.length > 0 )
@@ -372,18 +559,31 @@ void Controller::toBinary16()
     r.result = SUCCESS;
 
     //append arduino code for decoding RTTTL data
-    r.rtttlOutput = "//#define RTTTL_SERIAL_DEBUG\n\n";
-    appendArduinoBinRtttlFile(r.rtttlOutput);
+    r.rtttlOutput = "";
+    r.rtttlOutput.append("//Notes:\n");
+    r.rtttlOutput.append("// 16 Bits RTTTL format requires AnyRtttl library.\n");
+    r.rtttlOutput.append("// The code & updates for AnyRtttl library can be found on http://end2endzone.com\n");
+    r.rtttlOutput.append("#include <anyrtttl.h>\n");
+    r.rtttlOutput.append("#include <binrtttl.h>\n");
+    r.rtttlOutput.append("#include <pitches.h>\n");
     r.rtttlOutput.append("\n");
-    appendArduinoPlay16BitsRtttlFile(r.rtttlOutput);
+    r.rtttlOutput.append("//#define ANY_RTTTL_INFO\n");
+    r.rtttlOutput.append("//#define ANY_RTTTL_DEBUG\n");
     r.rtttlOutput.append("\n");
 
     //build a cpp friendly code for extracting data
     char buffer[10240];
-    sprintf(buffer, "//rtttl 16 bits binary format for the following: %s\n" \
+    sprintf(buffer, "//RTTTL 16 bits binary format for the following: %s\n" \
+                    "//Compatible with AnyRtttl library v%2.1f\n" \
                     "const unsigned char %s[] = %s;\n" \
-                    "const int %s_note_length = %d;\n",
-                    code, rtttl.name, cppCode.c_str(), rtttl.name, rtttl.notes.size());
+                    "const int %s_length = %d;\n",
+                    code, ANY_RTTTL_VERSION, rtttl.name, cppCode.c_str(), rtttl.name, rtttl.notes.size());
+    r.rtttlOutput.append(buffer);
+    r.rtttlOutput.append("\n");
+
+    sprintf(buffer, "//Call the following for playing %s melody\n", rtttl.name);
+    r.rtttlOutput.append(buffer);
+    sprintf(buffer, "//anyrtttl::blocking::play16Bits(BUZZER_PIN, %s, %s_length);\n", rtttl.name, rtttl.name);
     r.rtttlOutput.append(buffer);
 
     //build information message
@@ -433,69 +633,6 @@ std::string Controller::getErrorDescription(RTTTL_RESULT iResult)
     return "Unknown error.";
     break;
   };
-}
-
-void Controller::appendArduinoBinRtttlFile(std::string & ioBuffer)
-{
-  bin2cpp::File & file = bin2cpp::getBinRtttlFile();
-  char * content = file.newBuffer();
-  size_t contentSize = file.getSize();
-  if (content)
-  {
-    //make sure the buffer is '\0' terminated
-    char tmp = content[contentSize-1];
-    content[contentSize-1] = '\0';
-
-    //insert content into buffer
-    ioBuffer.append(content);
-
-    //insert last character
-    ioBuffer.append(1, tmp);
-
-    delete content;
-  }
-}
-
-void Controller::appendArduinoPlay10BitsRtttlFile(std::string & ioBuffer)
-{
-  bin2cpp::File & file = bin2cpp::getPlay10BitsRtttlFile();
-  char * content = file.newBuffer();
-  size_t contentSize = file.getSize();
-  if (content)
-  {
-    //make sure the buffer is '\0' terminated
-    char tmp = content[contentSize-1];
-    content[contentSize-1] = '\0';
-
-    //insert content into buffer
-    ioBuffer.append(content);
-
-    //insert last character
-    ioBuffer.append(1, tmp);
-
-    delete content;
-  }
-}
-
-void Controller::appendArduinoPlay16BitsRtttlFile(std::string & ioBuffer)
-{
-  bin2cpp::File & file = bin2cpp::getPlay16BitsRtttlFile();
-  char * content = file.newBuffer();
-  size_t contentSize = file.getSize();
-  if (content)
-  {
-    //make sure the buffer is '\0' terminated
-    char tmp = content[contentSize-1];
-    content[contentSize-1] = '\0';
-
-    //insert content into buffer
-    ioBuffer.append(content);
-
-    //insert last character
-    ioBuffer.append(1, tmp);
-
-    delete content;
-  }
 }
 
 void Controller::applyRtttlOptions()

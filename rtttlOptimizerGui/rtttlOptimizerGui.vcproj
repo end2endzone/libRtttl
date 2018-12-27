@@ -45,7 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIDGET_INCLUDE_FOLDER_1)\$(PlatformName)&quot;;&quot;$(WXWIDGET_LIB_FOLDER)\$(PlatformName)\$(ConfigurationName)\mswd&quot;;&quot;..\extLib\Include\$(PlatformName)&quot;;..\AppWrappers;&quot;..\wxAddons\Include\$(PlatformName)&quot;;..\libRTTTL;..\beep"
+				AdditionalIncludeDirectories="&quot;$(WXWIDGET_INCLUDE_FOLDER_1)\$(PlatformName)&quot;;&quot;$(WXWIDGET_LIB_FOLDER)\$(PlatformName)\$(ConfigurationName)\mswd&quot;;..\libRTTTL;..\beep;..\libMidi;..\arduino\BitReader;..\arduino\AnyRtttl;..\arduino\win32Arduino"
 				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -123,7 +123,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIDGET_INCLUDE_FOLDER_1)\$(PlatformName)&quot;;&quot;$(WXWIDGET_LIB_FOLDER)\$(PlatformName)\$(ConfigurationName)\mswd&quot;;&quot;..\extLib\Include\$(PlatformName)&quot;;..\AppWrappers;&quot;..\wxAddons\Include\$(PlatformName)&quot;;..\libRTTTL;..\beep"
+				AdditionalIncludeDirectories="&quot;$(WXWIDGET_INCLUDE_FOLDER_1)\$(PlatformName)&quot;;&quot;$(WXWIDGET_LIB_FOLDER)\$(PlatformName)\$(ConfigurationName)\mswd&quot;;..\libRTTTL;..\beep;..\libMidi;..\arduino\BitReader;..\arduino\AnyRtttl;..\arduino\win32Arduino"
 				PreprocessorDefinitions="WIN32;_DEBUG;__WXMSW__;__WXDEBUG__;_WINDOWS;NOPCH;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -202,7 +202,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(WXWIDGET_INCLUDE_FOLDER_1)\$(PlatformName)&quot;;&quot;$(WXWIDGET_LIB_FOLDER)\$(PlatformName)\$(ConfigurationName)\mswd&quot;;&quot;..\extLib\Include\$(PlatformName)&quot;;..\AppWrappers;&quot;..\wxAddons\Include\$(PlatformName)&quot;;..\libRTTTL;..\beep"
+				AdditionalIncludeDirectories="&quot;$(WXWIDGET_INCLUDE_FOLDER_1)\$(PlatformName)&quot;;&quot;$(WXWIDGET_LIB_FOLDER)\$(PlatformName)\$(ConfigurationName)\mswd&quot;;..\libRTTTL;..\beep;..\libMidi;..\arduino\BitReader;..\arduino\AnyRtttl;..\arduino\win32Arduino"
 				PreprocessorDefinitions="WIN32;__WXMSW__;_WINDOWS;NOPCH;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -283,7 +283,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(WXWIDGET_INCLUDE_FOLDER_1)\$(PlatformName)&quot;;&quot;$(WXWIDGET_LIB_FOLDER)\$(PlatformName)\$(ConfigurationName)\mswd&quot;;&quot;..\extLib\Include\$(PlatformName)&quot;;..\AppWrappers;&quot;..\wxAddons\Include\$(PlatformName)&quot;;..\libRTTTL;..\beep"
+				AdditionalIncludeDirectories="&quot;$(WXWIDGET_INCLUDE_FOLDER_1)\$(PlatformName)&quot;;&quot;$(WXWIDGET_LIB_FOLDER)\$(PlatformName)\$(ConfigurationName)\mswd&quot;;..\libRTTTL;..\beep;..\libMidi;..\arduino\BitReader;..\arduino\AnyRtttl;..\arduino\win32Arduino"
 				PreprocessorDefinitions="WIN32;__WXMSW__;_WINDOWS;NOPCH;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -339,11 +339,19 @@
 	<References>
 		<ProjectReference
 			ReferencedProjectIdentifier="{B8FC060B-BFCD-4279-8994-805F889FC6BA}"
-			RelativePathToProject=".\libRTTTL\librtttl.vcproj"
+			RelativePathToProject=".\libRtttl\librtttl.vcproj"
 		/>
 		<ProjectReference
 			ReferencedProjectIdentifier="{0767EBA9-C88A-467F-AC6E-26F8BDA23358}"
 			RelativePathToProject=".\beep\beep.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{E8D3440E-D5FB-4B3A-8F2E-3C828713C7B0}"
+			RelativePathToProject=".\libMidi\libMidi.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{D1F2A3E5-E6A6-4515-B828-1A50F2C4DFDB}"
+			RelativePathToProject=".\libAnyRtttl\libAnyRtttl.vcproj"
 		/>
 	</References>
 	<Files>
@@ -468,50 +476,6 @@
 			</File>
 			<File
 				RelativePath=".\Controller.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Embedded Files"
-			>
-			<File
-				RelativePath=".\arduino_binrtttl_library.template.ino"
-				>
-			</File>
-			<File
-				RelativePath=".\arduino_play10bitsRtttl.template.ino"
-				>
-			</File>
-			<File
-				RelativePath=".\arduino_play16bitsRtttl.template.ino"
-				>
-			</File>
-			<File
-				RelativePath=".\arduino_template_generator.bat"
-				>
-			</File>
-			<File
-				RelativePath=".\arduinoBinRtttl.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\arduinoBinRtttl.h"
-				>
-			</File>
-			<File
-				RelativePath=".\arduinoPlay10BitsRtttl.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\arduinoPlay10BitsRtttl.h"
-				>
-			</File>
-			<File
-				RelativePath=".\arduinoPlay16BitsRtttl.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\arduinoPlay16BitsRtttl.h"
 				>
 			</File>
 		</Filter>
