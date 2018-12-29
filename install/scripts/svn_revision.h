@@ -1,2 +1,0 @@
-#define SVN_REVISION 187
-#define SVN_REVISION_STR "187"
