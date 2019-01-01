@@ -8,6 +8,7 @@ if "%APPVEYOR_BUILD_FOLDER%"=="" (
 
 set GTEST_ROOT=%APPVEYOR_BUILD_FOLDER%\third_parties\googletest\install
 set rapidassist_DIR=%APPVEYOR_BUILD_FOLDER%\third_parties\RapidAssist\install
+set INSTALL_LOCATION=%APPVEYOR_BUILD_FOLDER%\install
 
 echo ============================================================================
 echo Cloning BitReader into %APPVEYOR_BUILD_FOLDER%\third_parties\BitReader
@@ -27,14 +28,14 @@ echo Compiling...
 echo ============================================================================
 mkdir build >NUL 2>NUL
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=%rapidassist_DIR% ..
+cmake -DCMAKE_INSTALL_PREFIX=%INSTALL_LOCATION% ..
 if %errorlevel% neq 0 exit /b %errorlevel%
 cmake --build . --config %Configuration%
 if %errorlevel% neq 0 exit /b %errorlevel%
 echo.
 
 REM echo ============================================================================
-REM echo Installing into %APPVEYOR_BUILD_FOLDER%\third_parties\BitReader\install
+REM echo Installing into %INSTALL_LOCATION%
 REM echo ============================================================================
 REM cmake --build . --config %Configuration% --target INSTALL
 REM if %errorlevel% neq 0 exit /b %errorlevel%

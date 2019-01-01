@@ -7,8 +7,7 @@ if "%APPVEYOR_BUILD_FOLDER%"=="" (
 )
 
 set GTEST_ROOT=%APPVEYOR_BUILD_FOLDER%\third_parties\googletest\install
-set rapidassist_DIR=%APPVEYOR_BUILD_FOLDER%\third_parties\RapidAssist\install
-echo rapidassist_DIR=%rapidassist_DIR%
+set INSTALL_LOCATION=%APPVEYOR_BUILD_FOLDER%\install
 
 echo ============================================================================
 echo Cloning RapidAssist into %APPVEYOR_BUILD_FOLDER%\third_parties\RapidAssist
@@ -28,14 +27,14 @@ echo Compiling...
 echo ============================================================================
 mkdir build >NUL 2>NUL
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=%rapidassist_DIR% ..
+cmake -DCMAKE_INSTALL_PREFIX=%INSTALL_LOCATION% ..
 if %errorlevel% neq 0 exit /b %errorlevel%
 cmake --build . --config %Configuration%
 if %errorlevel% neq 0 exit /b %errorlevel%
 echo.
 
 echo ============================================================================
-echo Installing into %GTEST_ROOT%
+echo Installing into %INSTALL_LOCATION%
 echo ============================================================================
 cmake --build . --config %Configuration% --target INSTALL
 if %errorlevel% neq 0 exit /b %errorlevel%
