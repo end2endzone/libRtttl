@@ -37,14 +37,15 @@
 #ifndef LIBRTTTL_STREAM_H
 #define LIBRTTTL_STREAM_H
 
-#include "librtttl.h"
+#include "libRtttl/config.h"
+#include "libRtttl/version.h"
 
 #include <string>
 
 namespace librtttl
 {
 
-struct LIBRTTTL_API STREAM
+struct LIBRTTTL_EXPORT STREAM
 {
   unsigned char * buffer;
   typedef size_t STREAM_SIZE;
@@ -92,7 +93,7 @@ struct LIBRTTTL_API STREAM
   }
 };
 
-LIBRTTTL_API std::string toCppArray(const STREAM & iStream);
+LIBRTTTL_EXPORT std::string toCppArray(const STREAM & iStream);
 
 }; //namespace librtttl
 

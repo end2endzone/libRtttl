@@ -9,9 +9,9 @@
 #include <tchar.h>
 #include <vector>
 #include <string>
-#include "notes.h"
-#include "tone.h"
-#include "rtttl.h"
+#include "../../src/libRtttl/notes.h" //temporary fix
+#include "libRtttl/tone.h"
+#include "libRtttl/rtttl.h"
 #include "bitreader.h"
 #include "gtesthelper.h"
 #include "utils.h"

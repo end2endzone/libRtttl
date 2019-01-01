@@ -37,9 +37,11 @@
 #ifndef LIBRTTTL_RTTTL_H
 #define LIBRTTTL_RTTTL_H
 
-#include "librtttl.h"
+#include "libRtttl/config.h"
+#include "libRtttl/version.h"
+#include "libRtttl/tone.h"
+
 #include "binrtttl.h"
-#include "tone.h"
 
 #include <vector>
 #include <string>
@@ -74,8 +76,8 @@ static RTTTL_SETTINGS       OFFICIAL_RTTTL_SETTINGS = {false, false, false, fals
 static RTTTL_SETTINGS         STRICT_RTTTL_SETTINGS = {true,  false, false, false};
 static RTTTL_SETTINGS   BPM_FRIENDLY_RTTTL_SETTINGS = {true,  false,  true,  true};
 static RTTTL_SETTINGS        RELAXED_RTTTL_SETTINGS = {true,   true,  true,  true};
-LIBRTTTL_API const RTTTL_SETTINGS & getRtttlSettings();
-LIBRTTTL_API void setRtttlSettings(const RTTTL_SETTINGS & iSettings);
+LIBRTTTL_EXPORT const RTTTL_SETTINGS & getRtttlSettings();
+LIBRTTTL_EXPORT void setRtttlSettings(const RTTTL_SETTINGS & iSettings);
 
 enum RTTTL_RESULT
 {
@@ -89,53 +91,53 @@ enum RTTTL_RESULT
   UNKNOWN_BPM, //BPM outside of official values
 };
 
-LIBRTTTL_API std::string getErrorDescription(RTTTL_RESULT iResult);
+LIBRTTTL_EXPORT std::string getErrorDescription(RTTTL_RESULT iResult);
 
-LIBRTTTL_API TONE_CALL_INFO_LIST playRTTTL(const char *p);
-LIBRTTTL_API TONE_CALL_INFO_LIST playRTTTL(const RTTTL_SONG & iSong);
+LIBRTTTL_EXPORT TONE_CALL_INFO_LIST playRTTTL(const char *p);
+LIBRTTTL_EXPORT TONE_CALL_INFO_LIST playRTTTL(const RTTTL_SONG & iSong);
 
 //backward compatibility.
-LIBRTTTL_API std::string calls2Rtttl(const char * iSongName);
-LIBRTTTL_API std::string calls2Rtttl(const char * iSongName,
+LIBRTTTL_EXPORT std::string calls2Rtttl(const char * iSongName);
+LIBRTTTL_EXPORT std::string calls2Rtttl(const char * iSongName,
                                      const RTTTL_DURATION * iForcedDefaultDuration,
                                      const RTTTL_OCTAVE_VALUE * iForcedDefaultOctave,
                                      const RTTTL_BPM * iForcedDefaultBpm);
 
-LIBRTTTL_API RTTTL_RESULT calls2Rtttl( const char * iSongName,
+LIBRTTTL_EXPORT RTTTL_RESULT calls2Rtttl( const char * iSongName,
                                        std::string & oRtttlCode,
                                        const RTTTL_DURATION * iForcedDefaultDuration = NULL,
                                        const RTTTL_OCTAVE_VALUE * iForcedDefaultOctave = NULL,
                                        const RTTTL_BPM * iForcedDefaultBpm = NULL);
-LIBRTTTL_API RTTTL_RESULT calls2Rtttl( const TONE_CALL_INFO_LIST & iCalls,
+LIBRTTTL_EXPORT RTTTL_RESULT calls2Rtttl( const TONE_CALL_INFO_LIST & iCalls,
                                        const char * iSongName,
                                        std::string & oRtttlCode,
                                        const RTTTL_DURATION * iForcedDefaultDuration = NULL,
                                        const RTTTL_OCTAVE_VALUE * iForcedDefaultOctave = NULL,
                                        const RTTTL_BPM * iForcedDefaultBpm = NULL);
 
-LIBRTTTL_API RTTTL_RESULT findAlternateRtttlEncoding(const char * iCode, StringVector & oAlternateEncodings);
-LIBRTTTL_API RTTTL_RESULT findAlternateRtttlEncoding(const RTTTL_SONG & iSong, StringVector & oAlternateEncodings);
-LIBRTTTL_API RTTTL_RESULT optimizeEncoding(const char * iCode, std::string & oRtttlCode);
+LIBRTTTL_EXPORT RTTTL_RESULT findAlternateRtttlEncoding(const char * iCode, StringVector & oAlternateEncodings);
+LIBRTTTL_EXPORT RTTTL_RESULT findAlternateRtttlEncoding(const RTTTL_SONG & iSong, StringVector & oAlternateEncodings);
+LIBRTTTL_EXPORT RTTTL_RESULT optimizeEncoding(const char * iCode, std::string & oRtttlCode);
 
-LIBRTTTL_API void dumpRtttlToneCalls(const char * iArray, const char * iFilename);
+LIBRTTTL_EXPORT void dumpRtttlToneCalls(const char * iArray, const char * iFilename);
 
-LIBRTTTL_API void reset(RTTTL_NOTE & iNote);
-LIBRTTTL_API void reset(RTTTL_DEFAULT_VALUE_SECTION & iDefaults);
-LIBRTTTL_API void reset(RTTTL_SONG & iSong);
+LIBRTTTL_EXPORT void reset(RTTTL_NOTE & iNote);
+LIBRTTTL_EXPORT void reset(RTTTL_DEFAULT_VALUE_SECTION & iDefaults);
+LIBRTTTL_EXPORT void reset(RTTTL_SONG & iSong);
 
-LIBRTTTL_API std::string toString(const RTTTL_NOTE & iNote);
-LIBRTTTL_API std::string toString(const RTTTL_NOTE & iNote, const RTTTL_DEFAULT_VALUE_SECTION & iDefaults);
-LIBRTTTL_API std::string toString(const RTTTL_DEFAULT_VALUE_SECTION & iDefaults);
-LIBRTTTL_API std::string toString(const RTTTL_DEFAULT_VALUE_SECTION & iDefaults, bool iForceIncludeDefaults);
-LIBRTTTL_API std::string toString(const RTTTL_SONG & iSong);
-LIBRTTTL_API std::string toString(const RTTTL_SONG & iSong, bool iForceIncludeDefaults);
+LIBRTTTL_EXPORT std::string toString(const RTTTL_NOTE & iNote);
+LIBRTTTL_EXPORT std::string toString(const RTTTL_NOTE & iNote, const RTTTL_DEFAULT_VALUE_SECTION & iDefaults);
+LIBRTTTL_EXPORT std::string toString(const RTTTL_DEFAULT_VALUE_SECTION & iDefaults);
+LIBRTTTL_EXPORT std::string toString(const RTTTL_DEFAULT_VALUE_SECTION & iDefaults, bool iForceIncludeDefaults);
+LIBRTTTL_EXPORT std::string toString(const RTTTL_SONG & iSong);
+LIBRTTTL_EXPORT std::string toString(const RTTTL_SONG & iSong, bool iForceIncludeDefaults);
 
-LIBRTTTL_API void toStream(const RTTTL_SONG & iSong, STREAM & oStream);
-LIBRTTTL_API void toStream10(const RTTTL_SONG & iSong, STREAM & oStream);
-LIBRTTTL_API void toStream16(const RTTTL_SONG & iSong, STREAM & oStream);
-LIBRTTTL_API bool parseStream(const STREAM & iStream, RTTTL_SONG & oSong);
-LIBRTTTL_API RTTTL_SONG parseRtttlString(const char * iCode);
-LIBRTTTL_API RTTTL_RESULT parseRtttlString(const char * iCode, RTTTL_SONG & oSong);
+LIBRTTTL_EXPORT void toStream(const RTTTL_SONG & iSong, STREAM & oStream);
+LIBRTTTL_EXPORT void toStream10(const RTTTL_SONG & iSong, STREAM & oStream);
+LIBRTTTL_EXPORT void toStream16(const RTTTL_SONG & iSong, STREAM & oStream);
+LIBRTTTL_EXPORT bool parseStream(const STREAM & iStream, RTTTL_SONG & oSong);
+LIBRTTTL_EXPORT RTTTL_SONG parseRtttlString(const char * iCode);
+LIBRTTTL_EXPORT RTTTL_RESULT parseRtttlString(const char * iCode, RTTTL_SONG & oSong);
 
 }; //namespace librtttl
 

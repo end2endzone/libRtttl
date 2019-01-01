@@ -16,7 +16,7 @@ echo ===========================================================================
 cd /d %APPVEYOR_BUILD_FOLDER%
 mkdir build >NUL 2>NUL
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=%INSTALL_LOCATION% -DLIBRTTTL_BUILD_TEST=ON -DBUILD_SHARED_LIBS=OFF -DLIBRTTTL_BUILD_SAMPLES=ON ..
+cmake -DCMAKE_INSTALL_PREFIX=%INSTALL_LOCATION% -DLIBRTTTL_BUILD_TEST=ON -DBUILD_SHARED_LIBS=OFF -DLIBRTTTL_BUILD_SAMPLES=OFF ..
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 echo ============================================================================

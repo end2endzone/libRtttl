@@ -34,7 +34,7 @@
 // 05/27/2016 v1.2 - First public release.
 //
 
-#include "tone.h"
+#include "libRtttl/tone.h"
 #include "notes.h"
 #include "utils.h"
 

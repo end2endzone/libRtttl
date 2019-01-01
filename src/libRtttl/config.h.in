@@ -1,0 +1,15 @@
+@LICENSE@
+#ifndef LIBRTTTL_CONFIG_H
+#define LIBRTTTL_CONFIG_H
+
+@LIBRTTTL_BUILD_TYPE_CPP_DEFINE@
+
+#ifdef LIBRTTTL_BUILT_AS_SHARED
+#   include "export.h"
+#endif
+
+#ifndef LIBRTTTL_EXPORT
+#   define LIBRTTTL_EXPORT
+#endif
+
+#endif //LIBRTTTL_CONFIG_H

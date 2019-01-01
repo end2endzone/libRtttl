@@ -1,7 +1,7 @@
 #ifndef MARIO_H
 #define MARIO_H
 
-#include "notes.h"
+#include "../../src/libRtttl/notes.h" //temporary fix
 
 /*************************************************
  * Super Mario Theme Melodies

@@ -34,7 +34,7 @@
 // 05/27/2016 v1.2 - First public release.
 //
 
-#include "stream.h"
+#include "libRtttl/stream.h"
 #include "utils.h"
 
 namespace librtttl

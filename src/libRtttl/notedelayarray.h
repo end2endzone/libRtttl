@@ -37,8 +37,7 @@
 #ifndef LIBRTTTL_NOTEDELAYARRAY_H
 #define LIBRTTTL_NOTEDELAYARRAY_H
 
-#include "librtttl.h"
-#include "tone.h"
+#include "libRtttl/tone.h"
 
 namespace librtttl
 {

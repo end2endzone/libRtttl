@@ -35,9 +35,9 @@
 //
 
 #include "NoteDelayArray.h"
-#include "tone.h"
+#include "libRtttl/tone.h"
+#include "libRtttl/rtttl.h"
 #include "utils.h"
-#include "rtttl.h"
 
 namespace librtttl
 {

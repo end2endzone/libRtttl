@@ -1,5 +1,5 @@
 #include "mario.h"
-#include "tone.h"
+#include "libRtttl/tone.h"
 #include "utils.h"
 
 using namespace librtttl;

@@ -1,6 +1,7 @@
 #include "ImperialMarch.h"
-#include "tone.h"
+#include "libRtttl/tone.h"
 #include "utils.h"
+#include "../../src/libRtttl/notes.h" //temporary fix
 
 using namespace librtttl;
 

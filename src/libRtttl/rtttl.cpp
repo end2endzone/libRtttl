@@ -34,8 +34,8 @@
 // 05/27/2016 v1.2 - First public release.
 //
 
-#include "rtttl.h"
-#include "tone.h"
+#include "libRtttl/rtttl.h"
+#include "libRtttl/tone.h"
 
 #include "notes.h"
 #include "utils.h"
@@ -349,7 +349,7 @@ RTTTL_SONG parseRtttlString(const char * iCode)
   return song;
 }
 
-LIBRTTTL_API RTTTL_RESULT parseRtttlString(const char * iCode, RTTTL_SONG & oSong)
+LIBRTTTL_EXPORT RTTTL_RESULT parseRtttlString(const char * iCode, RTTTL_SONG & oSong)
 {
   RTTTL_SONG s;
   reset(s);
@@ -1338,7 +1338,7 @@ RTTTL_RESULT calls2Rtttl(const char * iSongName,
   return calls2Rtttl(calls, iSongName, oRtttlCode, iForcedDefaultDuration, iForcedDefaultOctave, iForcedDefaultBpm);
 }
 
-LIBRTTTL_API RTTTL_RESULT calls2Rtttl( const TONE_CALL_INFO_LIST & iCalls,
+LIBRTTTL_EXPORT RTTTL_RESULT calls2Rtttl( const TONE_CALL_INFO_LIST & iCalls,
                                        const char * iSongName,
                                        std::string & oRtttlCode,
                                        const RTTTL_DURATION * iForcedDefaultDuration,
@@ -1455,7 +1455,7 @@ LIBRTTTL_API RTTTL_RESULT calls2Rtttl( const TONE_CALL_INFO_LIST & iCalls,
 }
 
 
-LIBRTTTL_API RTTTL_RESULT findAlternateRtttlEncoding(const char * iCode, StringVector & oAlternateEncodings)
+LIBRTTTL_EXPORT RTTTL_RESULT findAlternateRtttlEncoding(const char * iCode, StringVector & oAlternateEncodings)
 {
   oAlternateEncodings.clear();
   RTTTL_SONG song;
@@ -1466,7 +1466,7 @@ LIBRTTTL_API RTTTL_RESULT findAlternateRtttlEncoding(const char * iCode, StringV
   return findAlternateRtttlEncoding(song, oAlternateEncodings);
 }
 
-LIBRTTTL_API RTTTL_RESULT findAlternateRtttlEncoding(const RTTTL_SONG & iSong, StringVector & oAlternateEncodings)
+LIBRTTTL_EXPORT RTTTL_RESULT findAlternateRtttlEncoding(const RTTTL_SONG & iSong, StringVector & oAlternateEncodings)
 {
   TONE_CALL_INFO_LIST calls = playRTTTL(iSong);
 
