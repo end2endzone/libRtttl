@@ -1,0 +1,22 @@
+Changes for 1.3.0:
+
+* New Feature: Added CMake support.
+* New Feature: Modified code to support Windows and Linux.
+* New Feature: Implemented support for AppVeyor and Travis CI.
+* New Feature: Now using the following dependencies: [AnyRtttl](https://github.com/end2endzone/AnyRtttl) v2.2.0, [BitReader](https://github.com/end2endzone/BitReader) v1.3.0, [googletest](https://github.com/google/googletest) v1.8.0, [libMidi](https://github.com/end2endzone/libMidi) v2.0.0, [RapidAssist](https://github.com/end2endzone/RapidAssist) v0.5.0 and [win32Arduino](https://github.com/end2endzone/win32Arduino) v2.3.1.
+* New Feature: License modified from LGPL v3.0 to MIT.
+
+Changes for 1.2.196:
+
+* Fixed issue #1 : Remove binaries from tag.
+
+Changes for 1.2.195:
+
+* New Feature: Moved source code in `librtttl` namespace.
+* New Feature: Created APIs for getting note characters, durations, octaves and bpm.
+* New Feature: Created structures and union for handling rtttl in binary format.
+
+Changes for 1.1.129
+
+* First public release.
+* Originally released on http://www.end2endzone.com/librtttl-a-c-library-with-ui-for-compressingoptimizing-the-rtttl-audio-format/
