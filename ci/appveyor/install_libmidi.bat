@@ -19,8 +19,8 @@ git clone "https://github.com/end2endzone/libMidi.git"
 cd libMidi
 echo.
 
-echo Checking out version v2.2.0...
-git checkout 2.2.0
+echo Checking out version v2.0.0...
+git checkout 2.0.0
 echo.
 
 echo ============================================================================
