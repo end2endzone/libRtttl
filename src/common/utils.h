@@ -27,6 +27,7 @@
 
 #include <string>
 #include <vector>
+#include <cstring> // for memset()
 
 namespace librtttl
 {

@@ -22,14 +22,22 @@
  * SOFTWARE.
  *********************************************************************************/
 
-#include "libRtttl/rtttl.h"
-#include "libRtttl/tone.h"
+#include <algorithm>
+
+#include "librtttl/rtttl.h"
+#include "librtttl/tone.h"
 
 #include "notes.h"
 #include "utils.h"
-#include "BitReader.h"
+#include "bitreader.h"
 
-#include <algorithm>
+#include <string.h> //for strcpy_s()
+#ifndef _WIN32
+void strcpy_s(char * dest, size_t destsz, const char * src)
+{
+  strcpy(dest, src);
+}
+#endif
 
 //#define DEBUG_STREAMS
 

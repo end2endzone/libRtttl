@@ -30,12 +30,7 @@ namespace librtttl
 std::string itostr(int i)
 {
   char buffer[1024];
-
-#pragma warning( push )
-#pragma warning( disable : 4996) // warning C4996: 'itoa': The POSIX name for this item is deprecated.
-  itoa(i, buffer, 10);
-#pragma warning( pop ) 
-
+  sprintf(buffer, "%d", i);
   return std::string(buffer);
 }
 
@@ -128,7 +123,7 @@ bool isFileEquals(const char * iFile1, const char * iFile2)
   return true;
 }
 
-void librtttl::dumpString(const char * iValue, const char * iFilename)
+void dumpString(const char * iValue, const char * iFilename)
 {
   FILE * f = fopen(iFilename, "w");
   if (!f)

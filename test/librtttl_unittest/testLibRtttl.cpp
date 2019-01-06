@@ -26,21 +26,20 @@
 #define _WIN32_WINNT 0x0501	// Change this to the appropriate value to target other versions of Windows.
 #endif						
 
+#include "testLibRtttl.h"
 #include <stdio.h>
-#include <tchar.h>
 #include <vector>
 #include <string>
 #include "../../src/libRtttl/notes.h" //temporary fix
-#include "libRtttl/tone.h"
-#include "libRtttl/rtttl.h"
+#include "librtttl/tone.h"
+#include "librtttl/rtttl.h"
 #include "bitreader.h"
 #include "gtesthelper.h"
 #include "utils.h"
-#include "ImperialMarch.h"
+#include "imperialmarch.h"
 #include "generator.h"
 #include "counter5bits.h"
 #include "mario.h"
-#include "testLibRtttl.h"
 
 #define BUZZER_OUT_PIN 0
 

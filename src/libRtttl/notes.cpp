@@ -22,7 +22,7 @@
  * SOFTWARE.
  *********************************************************************************/
 
-#include "libRtttl/tone.h"
+#include "librtttl/tone.h"
 #include "notes.h"
 #include "utils.h"
 

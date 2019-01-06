@@ -25,8 +25,8 @@
 #ifndef LIBRTTTL_TONE_H
 #define LIBRTTTL_TONE_H
 
-#include "libRtttl/config.h"
-#include "libRtttl/version.h"
+#include "librtttl/config.h"
+#include "librtttl/version.h"
 
 #include <vector>
 #include <string>

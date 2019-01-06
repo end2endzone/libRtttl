@@ -22,9 +22,9 @@
  * SOFTWARE.
  *********************************************************************************/
 
-#include "NoteDelayArray.h"
-#include "libRtttl/tone.h"
-#include "libRtttl/rtttl.h"
+#include "notedelayarray.h"
+#include "librtttl/tone.h"
+#include "librtttl/rtttl.h"
 #include "utils.h"
 
 namespace librtttl

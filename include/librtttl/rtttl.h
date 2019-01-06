@@ -25,10 +25,10 @@
 #ifndef LIBRTTTL_RTTTL_H
 #define LIBRTTTL_RTTTL_H
 
-#include "libRtttl/config.h"
-#include "libRtttl/version.h"
-#include "libRtttl/tone.h"
-#include "libRtttl/stream.h"
+#include "librtttl/config.h"
+#include "librtttl/version.h"
+#include "librtttl/tone.h"
+#include "librtttl/stream.h"
 
 #include "binrtttl.h"
 

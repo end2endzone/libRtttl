@@ -23,7 +23,7 @@
  *********************************************************************************/
 
 #include "mario.h"
-#include "libRtttl/tone.h"
+#include "librtttl/tone.h"
 #include "utils.h"
 
 using namespace librtttl;

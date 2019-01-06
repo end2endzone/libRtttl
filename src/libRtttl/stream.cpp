@@ -22,7 +22,7 @@
  * SOFTWARE.
  *********************************************************************************/
 
-#include "libRtttl/stream.h"
+#include "librtttl/stream.h"
 #include "utils.h"
 
 namespace librtttl

@@ -22,12 +22,13 @@
  * SOFTWARE.
  *********************************************************************************/
 
-#include "gTestHelper.h"
+#include "gtesthelper.h"
 #include <iostream>
 #include <sstream> //for stringstream
 #include <iostream> //for std::hex
 #include <cstdlib>  //for random
 #include <ctime>    //for random
+#include <cstring>  //for memcmp
 
 bool initRandomProvider();
 static bool foo = initRandomProvider();
@@ -539,7 +540,7 @@ bool gTestHelper::getFileDifferences(const char* iFile1, const char* iFile2, std
 
 bool initRandomProvider()
 {
-  srand(unsigned int(time(0)));
+  srand(static_cast<unsigned int>(time(0)));
   return true;
 }
 

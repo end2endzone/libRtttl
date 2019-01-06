@@ -22,8 +22,8 @@
  * SOFTWARE.
  *********************************************************************************/
 
-#include "ImperialMarch.h"
-#include "libRtttl/tone.h"
+#include "imperialmarch.h"
+#include "librtttl/tone.h"
 #include "utils.h"
 #include "../../src/libRtttl/notes.h" //temporary fix
 

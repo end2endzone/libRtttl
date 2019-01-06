@@ -25,10 +25,11 @@
 #ifndef LIBRTTTL_STREAM_H
 #define LIBRTTTL_STREAM_H
 
-#include "libRtttl/config.h"
-#include "libRtttl/version.h"
+#include "librtttl/config.h"
+#include "librtttl/version.h"
 
 #include <string>
+#include <cstring> //for memset()
 
 namespace librtttl
 {
