@@ -1,5 +1,6 @@
 Changes for 1.3.0:
 
+* New Feature: Removed GUI support.
 * New Feature: Added CMake support.
 * New Feature: Modified code to support Windows and Linux.
 * New Feature: Implemented support for AppVeyor and Travis CI.
