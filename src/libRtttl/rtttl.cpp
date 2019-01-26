@@ -277,7 +277,7 @@ void sortBpms(BpmList & ioBpms)
 {
   struct BpmSorter
   {
-    inline bool operator() (const RTTTL_BPM & bpm1, const RTTTL_BPM & bpm2)
+    inline bool operator() (const RTTTL_BPM & bpm1, const RTTTL_BPM & bpm2) const
     {
       BPM_INDEX index1 = findBpmIndex(bpm1);
       BPM_INDEX index2 = findBpmIndex(bpm2);
@@ -306,7 +306,8 @@ void sortBpms(BpmList & ioBpms)
     }
   };
 
-  std::sort(ioBpms.begin(), ioBpms.end(), BpmSorter());
+  BpmSorter sorter;
+  std::sort(ioBpms.begin(), ioBpms.end(), sorter);
 }
 
 RTTTL_RESULT applyBpm(RTTTL_DEFAULT_VALUE_SECTION & ioDefaults, const RTTTL_BPM & iBpm)
