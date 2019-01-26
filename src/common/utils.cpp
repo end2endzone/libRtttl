@@ -24,6 +24,9 @@
 
 #include "utils.h"
 
+#include <cstdio>   // sprintf()
+#include <cstdio>   // fopen(), fseek(), fgets()
+
 namespace librtttl
 {
 
