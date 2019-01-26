@@ -26,8 +26,8 @@
 #include "notes.h"
 #include "utils.h"
 
-#include <cstdlib>    // atoi()
-#include <cstdio>     // fprintf(), fclose()
+#include <cstdlib>    //for atoi
+#include <cstdio>     //for fprintf, fclose
 
 namespace librtttl
 {

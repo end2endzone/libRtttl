@@ -29,6 +29,7 @@
 #include <cstdlib>  //for random
 #include <ctime>    //for random
 #include <cstring>  //for memcmp
+#include <cstdio>   //for fopen, fseek, fgets
 
 bool initRandomProvider();
 static bool foo = initRandomProvider();

@@ -32,6 +32,7 @@
 #include "bitreader.h"
 
 #include <string.h> //for strcpy_s()
+
 #ifndef _WIN32
 void strcpy_s(char * dest, size_t destsz, const char * src)
 {
