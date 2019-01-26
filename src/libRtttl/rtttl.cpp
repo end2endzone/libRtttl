@@ -166,7 +166,7 @@ std::string toString(const RTTTL_NOTE & iNote)
   }
   else
   {
-    sprintf(buffer, "%d%c%s%s%s", 
+    sprintf(buffer, "%d%c%s%s%d", 
       getNoteDurationFromIndex(iNote.durationIdx),
       getNoteLetterFromIndex(iNote.noteIdx),
       (iNote.pound ? "#" : ""),
