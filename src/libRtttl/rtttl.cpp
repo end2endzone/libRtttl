@@ -273,41 +273,37 @@ std::string toString(const RTTTL_SONG & iSong, bool iForceIncludeDefaults)
   return rtttl;
 }
 
+static bool compareRTTTL_BPM(const RTTTL_BPM & bpm1, const RTTTL_BPM & bpm2)
+{
+  BPM_INDEX index1 = findBpmIndex(bpm1);
+  BPM_INDEX index2 = findBpmIndex(bpm2);
+  bool isBpm1Official = (index1 != INVALID_BPM_INDEX);
+  bool isBpm2Official = (index2 != INVALID_BPM_INDEX);
+      
+  if (isBpm1Official && isBpm2Official)
+  {
+    return bpm1 < bpm2;
+  }
+  else if (isBpm1Official && !isBpm2Official)
+  {
+    return true; //bpm1 is < bpm2
+  }
+  else if (!isBpm1Official && isBpm2Official)
+  {
+    return false; //bpm1 is > bpm2
+  }
+  else if (!isBpm1Official && !isBpm2Official)
+  {
+    return bpm1 < bpm2;
+  }
+
+  //dont know what to do
+  return (bpm1 < bpm1);
+}
+
 void sortBpms(BpmList & ioBpms)
 {
-  struct BpmSorter
-  {
-    inline bool operator() (const RTTTL_BPM & bpm1, const RTTTL_BPM & bpm2) const
-    {
-      BPM_INDEX index1 = findBpmIndex(bpm1);
-      BPM_INDEX index2 = findBpmIndex(bpm2);
-      bool isBpm1Official = (index1 != INVALID_BPM_INDEX);
-      bool isBpm2Official = (index2 != INVALID_BPM_INDEX);
-      
-      if (isBpm1Official && isBpm2Official)
-      {
-        return bpm1 < bpm2;
-      }
-      else if (isBpm1Official && !isBpm2Official)
-      {
-        return true; //bpm1 is < bpm2
-      }
-      else if (!isBpm1Official && isBpm2Official)
-      {
-        return false; //bpm1 is > bpm2
-      }
-      else if (!isBpm1Official && !isBpm2Official)
-      {
-        return bpm1 < bpm2;
-      }
-
-      //dont know what to do
-      return (bpm1 < bpm1);
-    }
-  };
-
-  BpmSorter sorter;
-  std::sort(ioBpms.begin(), ioBpms.end(), sorter);
+  std::sort(ioBpms.begin(), ioBpms.end(), compareRTTTL_BPM);
 }
 
 RTTTL_RESULT applyBpm(RTTTL_DEFAULT_VALUE_SECTION & ioDefaults, const RTTTL_BPM & iBpm)
