@@ -26,6 +26,8 @@
 #include "librtttl/tone.h"
 #include "utils.h"
 
+#include <cstdio> //for printf
+
 using namespace librtttl;
 
 void playMarioThemeSong(const int & iPin, const int * iArray )

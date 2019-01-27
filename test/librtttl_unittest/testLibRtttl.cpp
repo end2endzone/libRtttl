@@ -41,6 +41,8 @@
 #include "counter5bits.h"
 #include "mario.h"
 
+#include <cstdio> //for printf
+
 #define BUZZER_OUT_PIN 0
 
 typedef unsigned char uint8_t;

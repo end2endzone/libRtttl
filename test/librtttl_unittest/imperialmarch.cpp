@@ -192,7 +192,7 @@ void dumpImperialMarchToneCalls(const char * iFilename)
   clearToneCalls();
   playImperialMarch(0);
   dumpRecordedToneCalls(iFilename);
-  printf("Imperial march has %d function calls\n", getRecordedToneCalls().size());
+  printf("Imperial march has %lu function calls\n", getRecordedToneCalls().size());
 }
 
 void convertImperialMarch2NoteDelayArray(const char * iArrayName, const char * iFilename)
