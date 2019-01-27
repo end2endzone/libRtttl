@@ -402,7 +402,7 @@ TEST_F(TestRTTTL, testSizeof)
 {
   //test size
   char buffer[1024];
-  sprintf(buffer, "sizeof(RTTTL_DEFAULT_VALUE_SECTION)=%d, sizeof(RTTTL_NOTE)=%d. \n", 
+  sprintf(buffer, "sizeof(RTTTL_DEFAULT_VALUE_SECTION)=%lu, sizeof(RTTTL_NOTE)=%lu. \n", 
     sizeof(RTTTL_DEFAULT_VALUE_SECTION),
     sizeof(RTTTL_NOTE)
     );

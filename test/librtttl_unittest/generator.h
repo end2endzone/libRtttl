@@ -202,7 +202,7 @@ void generate5BitCounterStream(const char * iFile)
 
   //output the array
   fprintf(f, "%s\n", arrayDefinition.c_str());
-  fprintf(f, "const size_t fiveBitCountersSize = sizeof(fiveBitCounters)/sizeof(fiveBitCounters[0]);\n", arrayDefinition.c_str());
+  fprintf(f, "const size_t fiveBitCountersSize = sizeof(fiveBitCounters)/sizeof(fiveBitCounters[0]);\n");
 
   fprintf(f, "\n");
   fprintf(f, "#endif //COUNTER5BITS_H\n");

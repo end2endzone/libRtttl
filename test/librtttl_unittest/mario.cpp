@@ -53,7 +53,7 @@ void dumpMarioThemeToneCalls(const int & iPin, const int * iArray, const char * 
   clearToneCalls();
   playMarioThemeSong(iPin, iArray);
   dumpRecordedToneCalls(iFilename);
-  printf("Mario theme song \"%s\" has %d function calls\n", iFilename, getRecordedToneCalls().size());
+  printf("Mario theme song \"%s\" has %lu function calls\n", iFilename, getRecordedToneCalls().size());
 }
 
 void convertMarioTheme2NoteDelayArray(const int & iPin, const int * iMelodyArray, const char * iArrayName, const char * iFilename)
