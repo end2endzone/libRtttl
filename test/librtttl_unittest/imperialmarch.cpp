@@ -27,6 +27,8 @@
 #include "utils.h"
 #include "../../src/libRtttl/notes.h" //temporary fix
 
+#include <cstdio> //for printf
+
 using namespace librtttl;
 
 void playImperialMarch(int iPinNumber) {

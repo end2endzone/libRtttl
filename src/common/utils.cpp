@@ -106,8 +106,8 @@ bool isFileEquals(const char * iFile1, const char * iFile2)
     return false;
   }
 
-  fread(buffer1, 1, size, f1);
-  fread(buffer2, 1, size, f2);
+  size_t read1 = fread(buffer1, 1, size, f1);
+  size_t read2 = fread(buffer2, 1, size, f2);
 
   for(int i=0; i<size; i++)
   {

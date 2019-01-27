@@ -269,7 +269,7 @@ gTestHelper::StringVector gTestHelper::getTestList(const char * iTestCasePath)
   commandLine.append("\"");
 
   //exec
-  system(commandLine.c_str());
+  int status = system(commandLine.c_str());
 
   if (!fileExists(logFilename.c_str()))
     return StringVector();
@@ -327,7 +327,7 @@ gTestHelper::StringVector gTestHelper::getTestList(const char * iTestCasePath)
   commandLine.append("\" 1>NUL 2>NUL");
 
   //exec
-  system(commandLine.c_str());
+  int status = system(commandLine.c_str());
 
   return testlist;
 }
@@ -636,7 +636,7 @@ void gTestHelper::changeFileContent(const char * iFilePath, size_t iOffset, unsi
   unsigned char * buffer = new unsigned char[size];
   if (!buffer)
     return;
-  fread(buffer, 1, size, f);
+  size_t readsize = fread(buffer, 1, size, f);
   fclose(f);
 
   //modify
